@@ -1,0 +1,7 @@
+body{
+    background-color: red;
+    background-image: url(../imgs/.);/*sem imagem referenciada, precisa colocar*/
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100px;
+}

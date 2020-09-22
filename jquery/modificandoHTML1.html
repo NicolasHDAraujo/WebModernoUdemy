@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>Modificando HTML #01</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+    <script src='js/jquery.js'></script>
+</head>
+
+<body class='conteudo exercicio'>
+    <h1>Modificando HTML #01</h1>
+    <div id='conteudo1'></div>
+    <div id='conteudo2'></div>
+    <div id='conteudo3'></div>
+    <div>Sem ID!</div>
+
+    <script>
+        // Conteudo 1
+        $('#conteudo1').append('<p>1</p>')//selecionando elemento e adcionando paragrafo com texto 
+
+        // Conteudo 2
+        const elementos = [//criar uma lista com jquery
+            $('<li></li>').append('Arroz'),
+            $('<li>').append('Feijão'),
+            $('<li>').append('Carne')
+        ]
+
+        const lista = $('<ul><li>Sorvete</li></ul>')//criando uma lista e adcionando um elemento
+            .prepend(elementos)//colocar os elementos antes do que já existem na lista(sorvete)
+        $('#conteudo2').append(lista)//adcionar a lista
+
+        // Conteudo 3
+        $('#conteudo3').append(['<h1>1</h1>', '<h1>2</h1>'])//array de elementos
+            .prepend('<h1>0</h1>')//colocar antes do elemento existente
+        $('#conteudo3').html('<h1>123</h1>')//html substitui o conteudo do elemento selecionado
+        $('#conteudo3').text('<h1>123</h1>')//adciona conteudo texto dentro da html, não interpretando a tag h1
+
+        // Alterando todos
+        $('div[id]').html('<strong>Todos!</strong>')//substituir o conteudo de todos com id
+    </script>
+</body>

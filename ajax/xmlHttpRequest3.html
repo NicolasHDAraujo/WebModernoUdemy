@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='UTF-8'>
+    <title>XMLHttpRequest #03</title>
+    <link rel='stylesheet' href='css/estilo.css'>
+</head>
+
+<body class="conteudo exercicio">
+    <h1>Estados</h1>
+
+    <script>
+        function ajax(config) {
+            const xhr = new XMLHttpRequest()//atribuindo xml
+            xhr.open(config.metodo, config.url, true)
+
+            xhr.onreadystatechange = e => {//sempre que o status da requisição mudar
+                if (xhr.readyState === 4) {//pegar apenas quando a requisição for finalizada e resposta pronta
+                    if (xhr.status === 200) {
+                        config.sucesso(xhr.responseXML)//recebendo objeto resolvido, como documento, se passar apenas response, o retorno seria com erro e um documento texto sem tratamento
+                    } else if (xhr.status >= 400) {//se deu erro
+                        config.erro({
+                            codigo: xhr.status,
+                            texto: xhr.statusText
+                        })
+                    }
+                }
+            }
+
+            xhr.send()//enviar a requisição
+        }
+
+        ajax({
+            url: "dados/estados.xml",//pegando o arquivo
+            metodo: "get",
+            sucesso(resposta) {//função com resposta de documento, parecido com manipulação de DOM
+                console.log(resposta)
+                const estados = resposta.getElementsByTagName('estado')//lista estados
+                const itens = Array.from(estados).reduce(//convertendo a array, recebendo o html e os estados
+                    (html, estado) => html + `<li>${estado.attributes.nome.value}</li>`, ''//html que vai receber uma lista com o valor nome
+                )
+                document.body.insertAdjacentHTML('beforeend', `<ul>${itens}</ul>`)//adcionando tudo dentro de uma ul antes de terminar o body
+            },
+            erro(e) {//função de erro
+                const msg = document.createTextNode(`${e.codigo}: ${e.texto}`)
+                document.body.appendChild(msg)
+            }
+        })
+    </script>
+</body>
